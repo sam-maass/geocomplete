@@ -243,7 +243,15 @@
           if (this.options.restoreValueAfterBlur === true && this.selected === true) {
             setTimeout($.proxy(this.restoreLastValue, this), 0);
           } else {
-            this.find();
+            if (this.options.blur === true){
+              this.$input.blur($.proxy(function(){
+                var autoSelection = this.selectFirstResult();
+                this.find(autoSelection);
+              }, this));
+            }
+            else {
+              this.find();
+            }
           }
         }, this));
       }
